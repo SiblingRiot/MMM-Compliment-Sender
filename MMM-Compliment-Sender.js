@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-Module.register("my-module", {
+Module.register("MMM-Compliment-Sender", {
   defaults: {
     jsonFile: "/home/pi/MagicMirror/Connections/complimentsB.json"
   },
