@@ -5,43 +5,34 @@
  * MIT Licensed.
  */
 
-var NodeHelper = require("node_helper");
+const fs = require("fs");
+const path = require("path");
+
+const NodeHelper = require("node_helper");
 
 module.exports = NodeHelper.create({
+  start: function() {
+    console.log("Starting node helper for module [" + this.name + "]");
+  },
 
-	// Override socketNotificationReceived method.
+  readJsonFromFile: function(filepath) {
+    const absolutePath = path.resolve(filepath);
+    const jsonString = fs.readFileSync(absolutePath, "utf8");
+    return JSON.parse(jsonString);
+  },
 
-	/* socketNotificationReceived(notification, payload)
-	 * This method is called when a socket notification arrives.
-	 *
-	 * argument notification string - The identifier of the noitication.
-	 * argument payload mixed - The payload of the notification.
-	 */
-	socketNotificationReceived: function(notification, payload) {
-		if (notification === "MMM-Compliment-Sender-NOTIFICATION_TEST") {
-			console.log("Working notification system. Notification:", notification, "payload: ", payload);
-			// Send notification
-			this.sendNotificationTest(this.anotherFunction()); //Is possible send objects :)
-		}
-	},
+  writeJsonToFile: function(filepath, data) {
+    const absolutePath = path.resolve(filepath);
+    const jsonString = JSON.stringify(data);
+    fs.writeFileSync(absolutePath, jsonString, "utf8");
+  },
 
-	// Example function send notification test
-	sendNotificationTest: function(payload) {
-		this.sendSocketNotification("MMM-Compliment-Sender-NOTIFICATION_TEST", payload);
-	},
-
-	// this you can create extra routes for your module
-	extraRoutes: function() {
-		var self = this;
-		this.expressApp.get("/MMM-Compliment-Sender/extra_route", function(req, res) {
-			// call another function
-			values = self.anotherFunction();
-			res.send(values);
-		});
-	},
-
-	// Test another function
-	anotherFunction: function() {
-		return {date: new Date()};
-	}
+  socketNotificationReceived: function(notification, payload) {
+    if (notification === "WRITE_JSON_TO_FILE") {
+      this.writeJsonToFile(payload.filepath, payload.data);
+    } else if (notification === "READ_JSON_FROM_FILE") {
+      const data = this.readJsonFromFile(payload.filepath);
+      this.sendSocketNotification("JSON_DATA", data);
+    }
+  }
 });
