@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-Module.register('MMM-MyKeyboardModule', {
+Module.register('MMM-Compliment-Sender', {
   defaults: {
     jsonFilePath: '/home/pi/MagicMirror/Connections/compplimentsB.json',
     messageType: 'anytime'
