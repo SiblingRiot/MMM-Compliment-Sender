@@ -43,6 +43,23 @@ Module.register('MMM-Compliment-Sender', {
   socketNotificationReceived: function (notification, payload) {
     if (notification === 'JSON_DATA_LOADED') {
       // do something with the loaded JSON data if needed
+      const fs = require('fs');
+      fs.readFile("complimentsB.json", (err, data) => {  // READ
+        if (err) {
+          return console.error(err);
+      };
+
+      var data = JSON.parse(data.toString());
+      data.age = "23"; // MODIFY
+      var writeData = fs.writeFile("complimentsB.json", JSON.stringify(data), (err, result) => {  // WRITE
+          if (err) {
+              return console.error(err);
+          } else {
+              console.log(result);
+              console.log("Success");
+          }
+      });
+  });
+      }
     }
-  }
 });
