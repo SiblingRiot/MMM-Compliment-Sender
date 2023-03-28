@@ -9,7 +9,7 @@
 
 Module.register('MMM-Compliment-Sender', {
   defaults: {
-    jsonFilePath: '/home/pi/MagicMirror/Connections/compplimentsB.json',
+    jsonFilePath: '/home/pi/MagicMirror/Connections/complimentsB.json',
     messageType: 'anytime'
   },
 
