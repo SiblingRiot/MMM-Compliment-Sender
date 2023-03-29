@@ -36,6 +36,7 @@ module.exports = NodeHelper.create({
 
   saveMessage: function (payload) {
     var self = this;
+    console.log(payload);
     var filePath = payload.jsonFilePath;
     var messageType = payload.type;
     var message = payload.message;
