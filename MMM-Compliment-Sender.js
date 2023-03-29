@@ -15,7 +15,7 @@ Module.register('MMM-Compliment-Sender', {
 
   start: function () {
     Log.info('MMM-MyKeyboardModule started');
-    this.sendSocketNotification('LOAD_JSON_DATA');
+    this.sendSocketNotification('LOAD_JSON_DATA', {...this.defaults});
   },
 
   getDom: function() {
@@ -32,7 +32,7 @@ Module.register('MMM-Compliment-Sender', {
     button.addEventListener("click", () => {
       var message = input.value.trim();
       if (message.length > 0) {
-        this.sendSocketNotification('SAVE_MESSAGE', { type: this.config.messageType, message: message });
+        this.sendSocketNotification('SAVE_MESSAGE', { ...this.defaults, type: this.config.messageType, message: message });
         input.value = '';
       }
     });
@@ -41,7 +41,7 @@ Module.register('MMM-Compliment-Sender', {
   },
 
   socketNotificationReceived: function (notification, payload) {
-    if (notification === 'JSON_DATA_LOADED') {
+    if (notification === 'SAVE_MESSAGE') {
       // do something with the loaded JSON data if needed
       const fs = require('fs');
       fs.readFile("complimentsB.json", (err, data) => {  // READ
