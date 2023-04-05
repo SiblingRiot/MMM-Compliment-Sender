@@ -1,6 +1,6 @@
 # MMM-Compliment-Sender
 
-This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
+This is a TEST module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
 Todo: Insert description here!
 
