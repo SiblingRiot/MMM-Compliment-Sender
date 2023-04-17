@@ -6,6 +6,9 @@
  * By Sibling Riot
  * MIT Licensed.
  */
+ 
+//import { MMM-Keyboard } from '/home/pi/MagicMirror/modules/MMM-Keyboard/MMM-Keyboard.js';
+//const Keyboard = require("MMM-Keyboard");
 
 Module.register('MMM-Compliment-Sender', {
   defaults: {
@@ -26,6 +29,12 @@ Module.register('MMM-Compliment-Sender', {
     input.setAttribute("id", "messageInput");
     input.setAttribute("maxlength", "50");
     input.setAttribute("placeholder", "Type your message here");
+    var keyboardModule = document.createElement("script");
+    keyboardModule.setAttribute("src", "/home/pi/MagicMirror/modules/MMM-Keyboard/MMM-Keyboard.js");
+    document.body.appendChild(keyboardModule);
+    keyboardModule.onload = function () {
+      Keyboard.attach(input);
+    };
     wrapper.appendChild(input);
     var button = document.createElement("button");
     button.innerHTML = "Send";
