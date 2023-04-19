@@ -13,7 +13,8 @@
 Module.register('MMM-Compliment-Sender', {
   defaults: {
     jsonFilePath: '/home/pi/MagicMirror/Connections/complimentsB.json',
-    messageType: 'anytime'
+    messageType: 'anytime',
+    useKeyboard: true
   },
 
   start: function () {
@@ -30,11 +31,11 @@ Module.register('MMM-Compliment-Sender', {
     input.setAttribute("maxlength", "50");
     input.setAttribute("placeholder", "Type your message here");
     var keyboardModule = document.createElement("script");
-    keyboardModule.setAttribute("src", "/home/pi/MagicMirror/modules/MMM-Keyboard/MMM-Keyboard.js");
+    /*keyboardModule.setAttribute("src", "/home/pi/MagicMirror/modules/MMM-Keyboard/MMM-Keyboard.js");
     document.body.appendChild(keyboardModule);
     keyboardModule.onload = function () {
       Keyboard.attach(input);
-    };
+    };*/
     wrapper.appendChild(input);
     var button = document.createElement("button");
     button.innerHTML = "Send";
@@ -47,6 +48,11 @@ Module.register('MMM-Compliment-Sender', {
     });
     wrapper.appendChild(button);
     return wrapper;
+  },
+  
+  openKeyboard: function () {
+    console.log("MMM-Compliment-Sender opening keyboard");
+    this.sendNotification("KEYBOARD", {key: "mmm-compliment-sender", style: "default"});
   },
 
   socketNotificationReceived: function (notification, payload) {
